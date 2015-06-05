@@ -1,5 +1,6 @@
 function [ majorTone ] = toneTrack( pitch )
 
+pitch(find(pitch==0)) = [];
 pitch = round(pitch);
 pitch = mod(pitch,12);
 

@@ -71,6 +71,7 @@ end
 % ³]©whamming window 
 w = hamming(frameSize);
 halfFrameSize = round(frameSize/2);
+isOdd = mod(frameSize,2);
 w1 = w(1:halfFrameSize);
 w2 = w(halfFrameSize+1 :end);
 
@@ -105,8 +106,11 @@ while frameInsertPos+frameSize-1<=synWaveLen
 	[minDistance, idx] = min(distance);
 	bestGap = idx-searchRange-1;
 	bestFrame = y(rcFrameStartId+bestGap:rcFrameEndId+bestGap);
-	synWave(frameInsertPos:frameInsertPos+halfFrameSize-1) = lastFrameRight.*w2+ bestFrame(1:halfFrameSize).*w1;
 
+    latter = lastFrameRight.*w2;
+    if isOdd, latter = [latter; latter(end)]; end
+	synWave(frameInsertPos:frameInsertPos+halfFrameSize-1) = latter+ bestFrame(1:halfFrameSize).*w1;
+    
 	if animOpt
 		fprintf('Hit space to see the search zone and the best matched frame...'); pause; fprintf('\n');
 		delete(boxH2); subplot(211); boxH2=boxOverlay([(rcFrameStartId-0.5)/fs, -0.95, frameSize/fs, 1.9], 'm', 1);
