@@ -23,7 +23,7 @@ wObj = waveFile2obj('../media/voice.wav');
 % pause
 
 %% Computing the minor version of original sound
-wObj2 = major2minor(wObj);
+wObj2 = major2scale(wObj);
 
 %% Play the result sound
 % sound(wObj2.signal)

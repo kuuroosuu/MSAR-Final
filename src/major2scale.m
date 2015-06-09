@@ -1,5 +1,6 @@
-function [ wObj ] = major2minor( wObj )
+function [ wObj ] = major2scale( wObj, scaleName )
 
+disp('Loading data ...')
 if ~exist('wObj','var')
     if exist('pitchCache.mat','file')
         load('pitchCache.mat');
@@ -21,7 +22,9 @@ else
     pitch = pitchTrack(wObj,ptOpt);
     save('pitchCache.mat','pitch','ptOpt','wObj');
 end
+if ~exist('scaleName','var'), scaleName = 'blue'; end
 
+disp(['Start to convert major to ' scaleName])
 majorTone = toneTrack(pitch);
 frames = enframe(wObj.signal,ptOpt.frameSize,ptOpt.overlap);
 frameSize = ptOpt.frameSize;
@@ -34,25 +37,33 @@ note = findContinueSeq(pitch,5);
 % wObjOpt = rmfield(wObj,'signal');
 offset = 1;
 wObj.signal = [];
+scale = musicalScale;
+scale = scale.(scaleName);
 for i = 1 : size(note,2)
     segment = zeros(frameSize*note(1,i),1);
     for j = 1 : note(1,i)
         segment(1+(j-1)*frameSize:j*frameSize,1) = frames(:,offset+j-1);
     end
-    tmp = mod(note(2,i)-majorTone,12);
-    if tmp==4 || tmp==9
+    diff = mod(note(2,i)-majorTone,12);
+    if scale(diff+1)
+        segment = pitchShift2(segment,512,32,scale(diff+1))';
+    end
+%     size(segment)
+%     tmp = mod(note(2,i)-majorTone,12);
+%     if tmp==4 || tmp==9
 %%%%%% SAP version
 %         twObj = wObjOpt;
 %         twObj.signal = segment;
 %         twObj = pitchShift(twObj,psOpt);
 %         segment = twObj.signal;
 %%%%%%
-        segment = pitchShift2(segment,512,32,-1)';
+%         segment = pitchShift2(segment,512,32,-1)';
 %%%%%%
-    end
+%     end
     offset = offset+note(1,i);
     wObj.signal = waveConcat(wObj.signal, segment);
 end
+disp('Done')
 
 end
 
