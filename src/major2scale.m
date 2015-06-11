@@ -40,13 +40,19 @@ wObj.signal = [];
 scale = musicalScale;
 scale = scale.(scaleName);
 for i = 1 : size(note,2)
-    segment = zeros(frameSize*note(1,i),1);
+    segment = zeros(frameSize*note(1,i),size(scale,1));
     for j = 1 : note(1,i)
         segment(1+(j-1)*frameSize:j*frameSize,1) = frames(:,offset+j-1);
     end
+    for j = 2 : size(scale,1)
+        segment(:,j) = segment(:,1);
+    end
     diff = mod(note(2,i)-majorTone,12);
     if scale(diff+1)
-        segment = pitchShift2(segment,512,32,scale(diff+1))';
+        for j = 1 : size(scale,1)
+            tmp = pitchShift2(segment(:,j),512,32,scale(j,diff+1))';
+            segment(:,j) = interp1(tmp, 1:size(segment,1), 'spline');
+        end
     end
 %     size(segment)
 %     tmp = mod(note(2,i)-majorTone,12);
@@ -61,6 +67,7 @@ for i = 1 : size(note,2)
 %%%%%%
 %     end
     offset = offset+note(1,i);
+    segment = mean(segment,2);
     wObj.signal = waveConcat(wObj.signal, segment);
 end
 disp('Done')
