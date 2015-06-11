@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TITLE</title>
+	<link rel="stylesheet" href="style.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="accordian.pack.js"></script>
+	<script type="text/javascript" src="func.js"></script>
+
+</head>
+
+<body onload=init() onunload=clear()>
+    <div id="logo"><h1>QQQ</h1></div></br>
+	<div id="basic-accordian" >
+	<div id="test-header" class="accordion_headings header_highlight">Step 1. 選擇歌曲</div>
+	<div id="test-content">
+		<div class="accordion_child">
+            <form name="SelectSongForm">
+                <select name="SelectSong" onchange=getTrackList()>
+                    <option value="NONE">請選擇歌曲</option>
+                    <option value="Lynyrd_Skynyrd_Sweet_Home_Alabama">Lynyrd_Skynyrd_Sweet_Home_Alabama</option>
+                    <option value="2.mp3">2</option>
+                    <option value="3.mp3">3</option>
+                </select>
+            </form>
+		</div>
+	</div>
+	<div id="test1-header" class="accordion_headings">Step 2. 設定各 track 調性搭配</div>
+	<div id="test1-content">
+		<div class="accordion_child">
+            <form id="trackform">
+                <text id="track1">qq </text><br>
+                <select name="track1_selection">
+                    <option value="">請選擇</option>
+                </select>
+                <br>
+                <text id="track1">qq </text><br>
+                <select name="track1_selection">
+                    <option value="">請選擇</option>
+                </select>
+                <br>
+                <text id="track1">qq </text><br>
+                <select name="track1_selection">
+                    <option value="">請選擇</option>
+                </select>
+                <br>
+                <text id="track1">qq </text><br>
+                <select name="track1_selection">
+                    <option value="">請選擇</option>
+                </select>
+                <br>
+                <text id="track1">qq </text><br>
+                <select name="track1_selection">
+                    <option value="">請選擇</option>
+                </select>
+                <br>
+                <text id="track1">qq </text><br>
+                <select name="track1_selection">
+                    <option value="">請選擇</option>
+                </select>
+                <br>
+                <text id="track1">qq </text><br>
+                <select name="track1_selection">
+                    <option value="">請選擇</option>
+                </select>
+                <br>
+                <text id="track1">qq </text><br>
+                <select name="track1_selection">
+                    <option value="">請選擇</option>
+                </select>
+                <br>
+            </form>
+		</div>
+	</div>
+	<div id="test2-header" class="accordion_headings">Step 3. 生成音樂</div>
+	<div id="test2-content">
+		<div class="accordion_child">
+			<input type="button" onclick="generate()" value="合成">
+            
+		</div>
+	</div>
+</div>
+	<div id="footer">
+		<a href="http://www.csie.ntu.edu.tw/~msar/project/abstract/G17/">MSAR FINAL PROJECT, Group 6</a>
+	</div>
+</body>
+</html>
