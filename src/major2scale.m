@@ -1,6 +1,6 @@
 function [ wObj ] = major2scale( wObj, scaleName )
 
-disp('Loading data ...')
+disp('Step 1/2 : Loading data ...')
 if ~exist('wObj','var')
     if exist('pitchCache.mat','file')
         load('pitchCache.mat');
@@ -24,7 +24,7 @@ else
 end
 if ~exist('scaleName','var'), scaleName = 'blue'; end
 
-disp(['Start to convert major to ' scaleName])
+disp(['Step 2/2 : Start to convert major to ' scaleName])
 majorTone = toneTrack(pitch);
 frames = enframe(wObj.signal,ptOpt.frameSize,ptOpt.overlap);
 frameSize = ptOpt.frameSize;
@@ -40,6 +40,7 @@ wObj.signal = [];
 scale = musicalScale;
 scale = scale.(scaleName);
 for i = 1 : size(note,2)
+    disp([num2str(i) ' / ' num2str(size(note,2))])
     segment = zeros(frameSize*note(1,i),size(scale,1));
     for j = 1 : note(1,i)
         segment(1+(j-1)*frameSize:j*frameSize,1) = frames(:,offset+j-1);

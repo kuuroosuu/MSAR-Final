@@ -9,10 +9,13 @@ addpath ../lib/utility/
 wObj = waveFile2obj('../media/voice.wav');
 
 %% Or use synthesized wave as audio
-% pitch =    [60 62 64 65 67 69 71 72 71 69 67 65 64 62 60];
-% duration = [23 23 23 23 23 23 23 23 23 23 23 23 23 23 23]/64;
+% MajorPitch = [65 67 69 70 72 74 76 77 76 74 72 70 69 67 65];
+% MinorPitch = [65 67 68 70 72 73 76 77 76 73 72 70 68 67 65];
+% duration = [19 19 19 19 19 19 19 19 19 19 19 19 19 19 19]/64;
 % fs = 16000;
-% wObj.signal = note2wave01(pitch, duration, fs)';
+% % wavwrite(note2wave01(MajorPitch, duration, fs)',fs,16,'./result/major.wav')
+% % wavwrite(note2wave01(MinorPitch, duration, fs)',fs,16,'./result/minor.wav')
+% wObj.signal = note2wave01(MajorPitch, duration, fs)';
 % wObj.fs = fs;
 % wObj.nbits = 16;
 % wObj.amplitudeNormalized = 1;

@@ -6,8 +6,7 @@ disp('Processing ...')
 noInclude = [];
 for i = 1 : length(fileName)
     disp([num2str(i) ' / ' num2str(length(fileName))])
-    fileName{i} = ['../media/' fileName{i}];
-    wObj = waveFile2obj(fileName{i});
+    wObj = waveFile2obj(['../media/' fileName{i}]);
     wObj.signal = mean(wObj.signal,2);
     if strcmp(scale{i},'none')
         au{i} = wObj.signal;
@@ -28,7 +27,12 @@ for i = 1 : length(au)
     music = music+au{i};
 end
 music = music/length(au);
-wavwrite(music,wObj.fs,['result/' datestr(now,'mmmm_dd_yyyy_HH_MM_SS_FFF_AM') '.wav'])
+% wavwrite(music,wObj.fs,['result/' datestr(now,'mmmm_dd_yyyy_HH_MM_SS_FFF_AM') '.wav'])
+if length(fileName)==1
+    wavwrite(music,wObj.fs,['result/' fileName{1}(1:end-4) '_' scale{1} '.wav'])
+else
+    wavwrite(music,wObj.fs,['result/' fileName{1}(1:end-4) '.wav'])
+end
 disp('Done')
 % sound(music,wObj.fs)
 
